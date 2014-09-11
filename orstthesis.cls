@@ -25,7 +25,6 @@
 \usepackage{setspace}
 \usepackage{makeidx}
 \usepackage{tocloft}
-\usepackage{hyperref}
 \let\ps@plain\ps@empty
 \ps@empty
 
@@ -96,12 +95,11 @@
 
 \newcommand{\flyleaf}{
 \newpage
-\pagestyle{empty} \ 
+\thispagestyle{empty} \ 
 \newpage
 }
 
 \newcommand{\phdabstract}[1]{
-\thispagestyle{empty}
 \begin{center}
 AN ABSTRACT OF THE DISSERTATION OF
 \end{center}
@@ -229,7 +227,7 @@ Preface
 \appendix
 \rule{0pt}{.3\textheight}\\
 \begin{center}
-\addcontentsline{toc}{chapter}{{Appendices}}
+\addcontentsline{toc}{chapter}{\protect{Appendices}}
 \Large\textbf{APPENDICES}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
 \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}

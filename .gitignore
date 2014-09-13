@@ -13,4 +13,7 @@
 *.ind
 *.lot
 *.out
-
+#compressed files
+*.gz
+*.zip
+*.bz

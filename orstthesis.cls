@@ -25,16 +25,17 @@
 \usepackage{setspace}
 \usepackage{makeidx}
 \usepackage{tocloft}
-\let\ps@plain\ps@empty
-\ps@empty
+\usepackage{afterpage}
+%\let\ps@plain\ps@empty
+%\ps@empty
 
 \newlength{\figwidth}
 \setlength{\figwidth}{.9\textwidth}
 \newlength{\figheight}
 \setlength{\figheight}{.6\textheight}
+\setlength{\headheight}{15pt}
 
-
-\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{2}
 
 
@@ -44,10 +45,32 @@
 \renewcommand{\cftchapfont}{\normalfont}
 \renewcommand{\cftchappagefont}{\normalfont}
 
+\renewcommand{\cfttoctitlefont}{\normalfont\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill\ }
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\setlength{\cftbeforetoctitleskip}{0em}
+\setlength{\cftaftertoctitleskip}{0em}
+\setlength{\cftbeforechapskip}{1em}
 
+\renewcommand{\cftloftitlefont}{\normalfont\hfill}
+\renewcommand{\cftafterloftitle}{\hfill\ }
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\setlength{\cftbeforeloftitleskip}{\cftbeforetoctitleskip}
+\setlength{\cftafterloftitleskip}{\cftaftertoctitleskip}
+
+\renewcommand{\cftlottitlefont}{\normalfont\hfill}
+\renewcommand{\cftafterlottitle}{\hfill\ }
+\renewcommand{\listtablename}{LIST OF TABLES}
+\setlength{\cftbeforelottitleskip}{\cftbeforetoctitleskip}
+\setlength{\cftafterlottitleskip}{\cftaftertoctitleskip}
+
+\DeclareRobustCommand*{\extratochead}{\afterpage{\hfill\underline{Page}\par}}
 \addtocontents{toc}{\protect{\hfill\underline{Page}\par}}
+\addtocontents{toc}{\extratochead}
 \addtocontents{lof}{\protect{\underline{Figures}\hfill\underline{Page}\par}}
+%\addtocontents{lof}{\extratochead}
 \addtocontents{lot}{\protect{\underline{Tables}\hfill\underline{Page}\par}}
+%\addtocontents{lot}{\extratochead}
 
 
 \newlength{\sigheight}
@@ -58,24 +81,36 @@
 \setlength{\sigwidth}{.9\textwidth}
 
 \newcommand{\sig}[1]{\begin{center}\vspace{\sigheight}\rule{\sigwidth}{1pt}\\#1\end{center}}
+\newcommand{\lsig}[1]{\begin{flushleft}
+\vspace{\sigheight}\rule{\sigwidth}{1pt}\\
+#1
+\end{flushleft}
+}
 
-\renewcommand{\chapter}{\cleardoublepage\suppressfloats[t]\@startsection{chapter}{1}{0pt}{0em}{3em}{\clearpage\centering\singlespace\LARGE\bfseries\MakeUppercase}}
-\renewcommand{\section}{\@startsection{section}{2}{0pt}{2em}{2em}{\centering\Large\bfseries}}
-\renewcommand{\subsection}{\@startsection{subsection}{3}{0pt}{1em}{1em}{\large\bfseries}}
-\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{1em}{1ex}{1ex}{\normalsize\bfseries}}
+\renewcommand{\chapter}{%
+ \addtocontents{lof}{\protect\addvspace{\cftbeforechapskip}}
+ \addtocontents{lot}{\protect\addvspace{\cftbeforechapskip}}
+ \cleardoublepage
+ \suppressfloats[t]
+ \thispagestyle{empty}
+ \@startsection{chapter}{1}{0pt}{0em}{4em}{\clearpage\centering\singlespace\MakeUppercase}
+}
+\renewcommand{\section}{\@startsection{section}{2}{0pt}{3em}{3em}{\centering}}
+\renewcommand{\subsection}{\@startsection{subsection}{3}{0pt}{2em}{2em}{\centering}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{1em}{1em}{1ex}{\centering}}
 
 \newcommand{\osu}{Oregon State University}
 
 \newcommand{\dept}{Department}
 \newcommand{\deptis}[1]{\renewcommand{\dept}{#1}}
 
-\newcommand{\prof}{Major I. Professor}
+\newcommand{\prof}{Major Professor}
 \newcommand{\profis}[1]{\renewcommand{\prof}{#1}}
 
 \newcommand{\name}{Degree S. Student}
 \newcommand{\nameis}[1]{\renewcommand{\name}{#1}}
 
-\newcommand{\degreename}{Doctor of Science}
+\newcommand{\degreename}{Doctor of Philosophy}
 \newcommand{\degreeis}[1]{\renewcommand{\degreename}{#1}}
 
 \newcommand{\major}{Major}
@@ -90,7 +125,7 @@
 \newcommand{\thesistitle}{Thesis Title}
 \newcommand{\thesistitleis}[1]{\renewcommand{\thesistitle}{#1}}
 
-\newcommand{\depthead}{Head}
+\newcommand{\depthead}{Dean}
 \newcommand{\deptheadis}[1]{\renewcommand{\depthead}{#1}}
 
 \newcommand{\flyleaf}{
@@ -105,16 +140,20 @@ AN ABSTRACT OF THE DISSERTATION OF
 \end{center}
 \underline{\name} for the degree of \underline{\degreename} in \underline{\major} presented on \underline{\defensedate}.\\
 Title:\ \underline{\thesistitle}.\\
+\\
+\\
 Abstract Approved:\\
 \sig{\prof}
+\doublespacing
 #1
+\singlespace
 }
 
 \newcommand{\copyrightpage}{
 \newpage
 \ \vspace{10\baselineskip}
 \begin{center}
-\copyright by \name\\
+Copyright by \name\\
 \defensedate\\
 All Rights Reserved
 \end{center}
@@ -136,8 +175,8 @@ submitted to\\
 \osu\\
 \vfill
 in partial fulfillment of\\
-the requirements for\\
-the degree of\\
+the requirements for the\\
+degree of\\
 \vfill
 \degreename\\
 \vfill
@@ -149,14 +188,16 @@ Commencement \commencement
 
 \newcommand{\approval}{
 \newpage
+\noindent
 \underline{\degreename} dissertation of \underline{\name} presented \underline{\defensedate}.
 \vfill
+\noindent
 APPROVED:
-\sig{\prof, representing \major}
-\sig{\depthead{} of the \dept}
-\sig{Dean of the Graduate School}
+\lsig{\prof, representing \major}
+\lsig{\depthead{} of the \dept}
+\lsig{Dean of the Graduate School}
 \vfill
-I understand that my dissertation will become a part of the permanent collection of \osu libraries. My signature below authorizes release of my thesis to any reader upon request.
+I understand that my dissertation will become a part of the permanent collection of \osu{} libraries. My signature below authorizes release of my dissertation to any reader upon request.
 \sig{\name, Author}
 \newpage
 }
@@ -207,6 +248,11 @@ Preface
 
 \renewcommand\frontmatter{%
   \@mainmatterfalse
+  \fancypagestyle{conthead}{%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhead[C]{\leftmark{} (CONTINUED)}
+  }
   \pagestyle{empty}
   \sloppy
 }
@@ -216,9 +262,10 @@ Preface
 \mainmatter
 \fussy
 \pagestyle{fancy}
-\renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
 \fancyhead[RO,LE]{\ifthenelse{\value{page}>1}{\thepage}{}}
+\pagestyle{fancy}
 }
 
 

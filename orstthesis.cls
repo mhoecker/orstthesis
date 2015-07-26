@@ -23,11 +23,10 @@
 \usepackage{ifthen}
 \usepackage{calc}
 \usepackage{setspace}
+\usepackage{titlesec}
 \usepackage{makeidx}
 \usepackage{tocloft}
 \usepackage{afterpage}
-%\let\ps@plain\ps@empty
-%\ps@empty
 
 \newlength{\figwidth}
 \setlength{\figwidth}{.9\textwidth}
@@ -35,7 +34,7 @@
 \setlength{\figheight}{.6\textheight}
 \setlength{\headheight}{15pt}
 
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 
 
@@ -66,10 +65,13 @@
 
 \DeclareRobustCommand*{\extratochead}{\afterpage{\hfill\underline{Page}\par}}
 \addtocontents{toc}{\protect{\hfill\underline{Page}\par}}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
 \addtocontents{toc}{\extratochead}
 \addtocontents{lof}{\protect{\underline{Figures}\hfill\underline{Page}\par}}
+\addtocontents{lof}{\protect\thispagestyle{empty}}
 %\addtocontents{lof}{\extratochead}
 \addtocontents{lot}{\protect{\underline{Tables}\hfill\underline{Page}\par}}
+\addtocontents{lot}{\protect\thispagestyle{empty}}
 %\addtocontents{lot}{\extratochead}
 
 
@@ -87,13 +89,16 @@
 \end{flushleft}
 }
 
+%\titleformat{\chapter}{\normalfont}{\thechapter.}{0pt}{\begin{center}}{\end{center}%%
+% \addtocontents{lof}{\protect\addvspace{\cftbeforechapskip}}%
+% \addtocontents{lot}{\protect\addvspace{\cftbeforechapskip}}%
+% }
+
 \renewcommand{\chapter}{%
- \addtocontents{lof}{\protect\addvspace{\cftbeforechapskip}}
- \addtocontents{lot}{\protect\addvspace{\cftbeforechapskip}}
- \cleardoublepage
- \suppressfloats[t]
- \thispagestyle{empty}
- \@startsection{chapter}{1}{0pt}{0em}{4em}{\clearpage\centering\singlespace\MakeUppercase}
+\cleardoublepage%
+\addtocontents{lof}{\protect\addvspace{\cftbeforechapskip}}%
+\addtocontents{lot}{\protect\addvspace{\cftbeforechapskip}}%
+\@startsection{chapter}{1}{0pt}{4em}{4em}{\clearpage\centering\singlespace\MakeUppercase}%
 }
 \renewcommand{\section}{\@startsection{section}{2}{0pt}{3em}{3em}{\centering}}
 \renewcommand{\subsection}{\@startsection{subsection}{3}{0pt}{2em}{2em}{\centering}}
@@ -153,7 +158,7 @@ Abstract Approved:\\
 \newpage
 \ \vspace{10\baselineskip}
 \begin{center}
-Copyright by \name\\
+\copyright Copyright by \name\\
 \defensedate\\
 All Rights Reserved
 \end{center}
@@ -252,6 +257,10 @@ Preface
   \fancyhf{}
   \renewcommand{\headrulewidth}{0pt}
   \fancyhead[C]{\leftmark{} (CONTINUED)}
+  }
+  \fancypagestyle{empty}{%
+   \renewcommand{\headrulewidth}{0pt}
+   \fancyhf{}
   }
   \pagestyle{empty}
   \sloppy
